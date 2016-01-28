@@ -1,0 +1,1 @@
+# OXID-DependencyManager

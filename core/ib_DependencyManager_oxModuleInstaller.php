@@ -9,7 +9,22 @@
 class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModuleInstaller_parent{
     
     protected function _validateDependencies(array $aDeps){
+        $blValid        = true;
+        /* @var $oModuleList oxModuleList */
+        $oModuleList    = oxNew("oxModuleList");
+        $aModules       = $oModuleList->getActiveModuleInfo();
         
+        foreach($aDeps as $sDepModule){
+            if(!array_key_exists($sDepModule, $aModules)){
+                $oLang                  = oxRegistry::getLang();
+                $sMessage               = $oLang->translateString("ib_DependencyManager_MISSING_MODULE");
+                $sTranslatedMessage     = sprintf($sMessage, $sDepModule);
+                $oException = new oxException($sMessage);
+                throw $oException;
+            }
+        }
+        
+        return $blValid;
     }
     
     /**
@@ -27,12 +42,12 @@ class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModu
             $aDeps      = $oModule->getDependencies();
             $blResult   = $this->_validateDependencies($aDeps);
             
+            if($blResult == true){
+                $blResult = parent::activate($oModule);
+            }
         }
         
-        /**
-         * @todo implement dependencies
-         */
-        return parent::activate($oModule);
+        return $blResult;
     }
     
     /**

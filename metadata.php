@@ -11,7 +11,8 @@ $aModule = array(
     "url"         => "http://blog.php-dev.info",
     "email"       => "info@php-dev.info",
     "extend"      => array(
-        'oxModule'          => 'ib_DependencyManager/core/ib_DependencyManager_oxModule',
+        'oxModule'              => 'ib_DependencyManager/core/ib_DependencyManager_oxModule',
+        'oxModuleInstaller'     => 'ib_DependencyManager/core/ib_DependencyManager_oxModuleInstaller',
     ),
     "files"       => array(
     ),

@@ -8,6 +8,10 @@
 
 class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModuleInstaller_parent{
     
+    protected function _validateDependencies(array $aDeps){
+        
+    }
+    
     /**
      * Activate extension by merging module class inheritance information with shop module array
      *
@@ -16,6 +20,15 @@ class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModu
      * @return bool
      */
     public function activate(oxModule $oModule){
+        $blResult   = false;
+        $sModuleId  = $oModule->getId();
+        
+        if($sModuleId){
+            $aDeps      = $oModule->getDependencies();
+            $blResult   = $this->_validateDependencies($aDeps);
+            
+        }
+        
         /**
          * @todo implement dependencies
          */

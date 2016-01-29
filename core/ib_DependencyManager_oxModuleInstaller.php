@@ -14,17 +14,44 @@ class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModu
         $oModuleList    = oxNew("oxModuleList");
         $aModules       = $oModuleList->getActiveModuleInfo();
         
-        foreach($aDeps as $sDepModule){
-            if(!array_key_exists($sDepModule, $aModules)){
+        foreach($aDeps as $sModuleName => $aModuleDep){
+            if(!array_key_exists($sModuleName, $aModules)){
                 $oLang                  = oxRegistry::getLang();
                 $sMessage               = $oLang->translateString("ib_DependencyManager_MISSING_MODULE");
-                $sTranslatedMessage     = sprintf($sMessage, $sDepModule);
+                $sTranslatedMessage     = sprintf($sMessage, $sModuleName);
                 $oException = new oxException($sTranslatedMessage);
                 throw $oException;
+            }else{
+                $blValid = $this->_validateVersions($sModuleName, $aModuleDep);
+                if(!$blValid){
+                    $oException         = new oxException("ib_DependencyManager_VERSION_MISSMATCH");
+                    throw $oException;
+                }
             }
         }
         
         return $blValid;
+    }
+    
+    protected function _validateVersions($sModuleName, array $aModuleDep){
+        $blVersion   = true;
+        /* @var $oModule oxModule */
+        $oModule     = oxNew("oxModule");
+        $oModule->load($sModuleName);
+        $sVersion    = $oModule->getInfo("version");
+
+        if(array_key_exists("minVersion", $aModuleDep)){
+            $sMinVersion        = $aModuleDep["minVersion"];
+            $blVersion          = version_compare($sVersion, $sMinVersion, ">=");
+
+        }
+
+        if(array_key_exists("maxVersion", $aModuleDep)){
+            $sMaxVersion        = $aModuleDep["maxVersion"];
+            $blVersion           = version_compare($sVersion, $sMaxVersion, "<=");
+        }
+        
+        return $blVersion;
     }
     
     /**

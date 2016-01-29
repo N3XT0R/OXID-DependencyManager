@@ -19,7 +19,7 @@ class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModu
                 $oLang                  = oxRegistry::getLang();
                 $sMessage               = $oLang->translateString("ib_DependencyManager_MISSING_MODULE");
                 $sTranslatedMessage     = sprintf($sMessage, $sDepModule);
-                $oException = new oxException($sMessage);
+                $oException = new oxException($sTranslatedMessage);
                 throw $oException;
             }
         }

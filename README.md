@@ -8,5 +8,39 @@ Einzelne Modulklassen können in OXID überladen werden, doch immer mal wieder i
 - PHP 5.4 oder höher
 - OXID CE/PE/EE in der Version 4.9.x / 5.2.x
 
-## Achtung!
-Das Modul ist derzeit in Entwicklung. 
+## metadata.php
+
+Die Metadata.php muss bei Modulabhängigkeiten um ein weiteres Feld erweitert werden:
+
+### Modulabhängigkeiten definieren
+
+```
+'dependencies'     => array(
+    'myDepModule' => array(),
+),
+```
+
+
+### Versionsabhängigkeiten & Modulabhängigkeiten
+
+```
+'dependencies'     => array(
+    ‚myDepModule‘ => array(
+        'minVersion'        => ‚1.0.0‘,
+        'maxVersion'        => ‚1.2.0‘,
+    ),
+),
+```
+
+### 
+
+
+### Wildcard-MaxVersions definieren
+
+```
+'dependencies'     => array(
+    ‚myDepModule‘ => array(
+        'minVersion'        => ‚1.0.0‘,
+        'maxVersion'        => ‚1.*.*‘,
+    ),
+),

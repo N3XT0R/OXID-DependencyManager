@@ -41,17 +41,25 @@ class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModu
         $sVersion    = $oModule->getInfo("version");
 
         if(array_key_exists("minVersion", $aModuleDep)){
-            $sMinVersion        = $aModuleDep["minVersion"];
-            $blVersion          = version_compare($sVersion, $sMinVersion, ">=");
-
+            if(!empty($aModuleDep["minVersion"])){
+                $sMinVersion        = $aModuleDep["minVersion"];
+                $blVersion          = version_compare($sVersion, $sMinVersion, ">=");
+            }
         }
 
-        if(array_key_exists("maxVersion", $aModuleDep)){
-            $sMaxVersion        = $aModuleDep["maxVersion"];
-            $blVersion           = version_compare($sVersion, $sMaxVersion, "<=");
+        if(array_key_exists("maxVersion", $aModuleDep) && $blVersion == true){
+            if(!empty($aModuleDep["maxVersion"])){
+                $sMaxVersion        = $this->_replaceWildcards($aModuleDep["maxVersion"]);
+                $blVersion           = version_compare($sVersion, $sMaxVersion, "<=");
+            }
         }
         
         return $blVersion;
+    }
+
+    protected function _replaceWildcards($sVersion){
+        $sReplaced = str_replace("*", "999999", $sVersion);
+        return $sReplaced;
     }
     
     /**
@@ -85,9 +93,35 @@ class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModu
      * @return bool
      */
     public function deactivate(oxModule $oModule){
-        /**
-         * @todo implement dependencies
-         */
-        return parent::deactivate($oModule);
+        $blResult   = false;
+        $sModuleId  = $oModule->getId();
+
+        if($sModuleId){
+            $oModuleList = oxNew("oxModuleList");
+            $aModules    = $oModuleList->getActiveModuleInfo();
+
+            foreach($aModules as $sActiveModule => $sPath){
+                $oSubModule = oxNew("oxModule");
+                $oSubModule->load($sActiveModule);
+                $aDeps   = $oSubModule->getDependencies();
+
+                if(array_key_exists($sModuleId, $aDeps)){
+
+                    $blIsActive = $oSubModule->isActive();
+                    if($blIsActive == true){
+                        $oLang                  = oxRegistry::getLang();
+                        $sMessage               = $oLang->translateString("ib_DependencyManager_DEP_ACTIVE");
+                        $sTranslatedMessage     = sprintf($sMessage, $sModuleId);
+                        $oException = new oxException($sTranslatedMessage);
+                        throw $oException;
+                        break;
+                    }
+                }
+            }
+
+            $blResult = parent::deactivate($oModule);
+        }
+
+       return $blResult;
     }
 }

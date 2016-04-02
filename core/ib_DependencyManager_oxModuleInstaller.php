@@ -7,13 +7,42 @@
  */
 
 class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModuleInstaller_parent{
-    
+
+    protected $_oDependencyManager;
+
+    /**
+     * Set DependencyManager
+     * @param ib_dependencyManager $oDependencyManager
+     * @return $this
+     */
+    public function setDependencyManager(ib_dependencyManager $oDependencyManager){
+        $this->_oDependencyManager = $oDependencyManager;
+        return $this;
+    }
+
+    /**
+     * Get DependencyManager
+     * @return ib_dependencyManager
+     */
+    public function getDependencyManager(){
+        if(!isset($this->_oDependencyManager)){
+            $oDependencyManager = oxNew("ib_dependencyManager");
+            $this-$this->setDependencyManager($oDependencyManager);
+        }
+
+        return $this->_oDependencyManager;
+    }
+
     protected function _validateDependencies(array $aDeps){
+
         $blValid        = true;
         /* @var $oModuleList oxModuleList */
         $oModuleList    = oxNew("oxModuleList");
         $aModules       = $oModuleList->getActiveModuleInfo();
-        
+
+        /**
+         * Validate dependencies to other modules
+         */
         foreach($aDeps as $sModuleName => $aModuleDep){
             if(!array_key_exists($sModuleName, $aModules)){
                 $oLang                  = oxRegistry::getLang();
@@ -22,7 +51,8 @@ class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModu
                 $oException = new oxException($sTranslatedMessage);
                 throw $oException;
             }else{
-                $blValid = $this->_validateVersions($sModuleName, $aModuleDep);
+                $oDependencyManager     = $this->getDependencyManager();
+                $blValid                = $oDependencyManager->getModuleVersionsAreValid($sModuleName, $aModuleDep);
                 if(!$blValid){
                     $oException         = new oxException("ib_DependencyManager_VERSION_MISSMATCH");
                     throw $oException;
@@ -32,51 +62,35 @@ class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModu
         
         return $blValid;
     }
-    
-    protected function _validateVersions($sModuleName, array $aModuleDep){
-        $blVersion   = true;
-        /* @var $oModule oxModule */
-        $oModule     = oxNew("oxModule");
-        $oModule->load($sModuleName);
-        $sVersion    = $oModule->getInfo("version");
 
-        if(array_key_exists("minVersion", $aModuleDep)){
-            if(!empty($aModuleDep["minVersion"])){
-                $sMinVersion        = $aModuleDep["minVersion"];
-                $blVersion          = version_compare($sVersion, $sMinVersion, ">=");
-            }
-        }
 
-        if(array_key_exists("maxVersion", $aModuleDep) && $blVersion == true){
-            if(!empty($aModuleDep["maxVersion"])){
-                $sMaxVersion        = $this->_replaceWildcards($aModuleDep["maxVersion"]);
-                $blVersion           = version_compare($sVersion, $sMaxVersion, "<=");
-            }
-        }
-        
-        return $blVersion;
-    }
-
-    protected function _replaceWildcards($sVersion){
-        $sReplaced = str_replace("*", "999999", $sVersion);
-        return $sReplaced;
-    }
-    
     /**
-     * Activate extension by merging module class inheritance information with shop module array
-     *
      * @param oxModule $oModule
-     *
-     * @return bool
+     * @return bool|mixed
+     * @throws oxException
      */
     public function activate(oxModule $oModule){
         $blResult   = false;
         $sModuleId  = $oModule->getId();
         
         if($sModuleId){
-            $aDeps      = $oModule->getDependencies();
-            $blResult   = $this->_validateDependencies($aDeps);
-            
+            /**
+             * @todo test it
+             */
+            /*
+            $aOXIDVersion           = $oModule->getRequiredOXIDVersion();
+            $oDependencyManager     = $this->getDependencyManager();
+            $blShopValid            = $oDependencyManager->getShopVersionIsValid($aOXIDVersion);
+
+            if($blShopValid === false){
+                $oException         = new oxException("ib_DependencyManager_OXIDVERSION_MISSMATCH");
+                throw $oException;
+            }
+            */
+
+            $aDeps          = $oModule->getDependencies();
+            $blResult       = $this->_validateDependencies($aDeps);
+
             if($blResult == true){
                 $blResult = parent::activate($oModule);
             }
@@ -84,13 +98,11 @@ class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModu
         
         return $blResult;
     }
-    
+
     /**
-     * Deactivate extension by adding disable module class information to disabled module array
-     *
      * @param oxModule $oModule
-     *
      * @return bool
+     * @throws oxException
      */
     public function deactivate(oxModule $oModule){
         $blResult   = false;
@@ -111,7 +123,7 @@ class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModu
                     if($blIsActive == true){
                         $oLang                  = oxRegistry::getLang();
                         $sMessage               = $oLang->translateString("ib_DependencyManager_DEP_ACTIVE");
-                        $sTranslatedMessage     = sprintf($sMessage, $sModuleId);
+                        $sTranslatedMessage     = sprintf($sMessage, $sActiveModule);
                         $oException = new oxException($sTranslatedMessage);
                         throw $oException;
                         break;

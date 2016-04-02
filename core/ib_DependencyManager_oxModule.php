@@ -21,4 +21,12 @@ class ib_DependencyManager_oxModule extends ib_DependencyManager_oxModule_parent
         
         return $aResult;
     }
+
+    public function getRequiredOXIDVersion(){
+        $aResult = array();
+        if($this->_aModule["OXIDVersion"]){
+            $aResult = $this->_aModule["OXIDVersion"];
+        }
+        return $aResult;
+    }
 }

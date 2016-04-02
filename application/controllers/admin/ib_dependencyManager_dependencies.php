@@ -11,6 +11,10 @@ class ib_dependencyManager_dependencies extends oxAdminDetails{
 
     protected $_sThisTemplate = "admin/tpl/ib_dependencyManager_deps.tpl";
 
+    /**
+     * Returns array with required dependencies
+     * @return array
+     */
     public function getDependencies(){
 
         $sOXID      = $this->getEditObjectId();
@@ -21,6 +25,12 @@ class ib_dependencyManager_dependencies extends oxAdminDetails{
         return $aDeps;
     }
 
+
+    /**
+     * Checks if a module exists on filesystem
+     * @param $sModuleId
+     * @return bool
+     */
     public function getModuleExists($sModuleId){
         $blResult       = false;
         $sModulesDir    = $this->getConfig()->getModulesDir();
@@ -37,11 +47,22 @@ class ib_dependencyManager_dependencies extends oxAdminDetails{
         return $blResult;
     }
 
-    public function getIsModuleCompatible($sModuleId, $aDeps){
+    /**
+     * Get compatibility state from one module
+     * @param $sModuleId
+     * @param array $aDeps
+     * @return bool
+     */
+    public function getIsModuleCompatible($sModuleId,array $aDeps){
         $oDependencyManager = oxNew("ib_dependencyManager");
         return $oDependencyManager->getModuleVersionsAreValid($sModuleId, $aDeps);
     }
 
+    /**
+     * Get activationstate from one module
+     * @param $sModuleId
+     * @return bool
+     */
     public function getIsModuleActive($sModuleId){
         $oModule    = oxNew("oxModule");
         $oModule->load($sModuleId);

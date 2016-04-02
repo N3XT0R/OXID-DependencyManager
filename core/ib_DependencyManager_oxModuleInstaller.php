@@ -27,7 +27,7 @@ class ib_DependencyManager_oxModuleInstaller extends ib_DependencyManager_oxModu
     public function getDependencyManager(){
         if(!isset($this->_oDependencyManager)){
             $oDependencyManager = oxNew("ib_dependencyManager");
-            $this-$this->setDependencyManager($oDependencyManager);
+            $this->setDependencyManager($oDependencyManager);
         }
 
         return $this->_oDependencyManager;

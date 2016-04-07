@@ -24,9 +24,9 @@ Die Metadata.php muss bei Modulabhängigkeiten um ein weiteres Feld erweitert we
 
 ```php
 'dependencies'     => array(
-    'myDepModule‘ => array(
-        'minVersion'        => '1.0.0‘,
-        'maxVersion'        => '1.2.0‘,
+    'myDepModule' => array(
+        'minVersion'        => '1.0.0',
+        'maxVersion'        => '1.2.0',
     ),
 ),
 ```
@@ -35,9 +35,9 @@ Die Metadata.php muss bei Modulabhängigkeiten um ein weiteres Feld erweitert we
 
 ```php
 'dependencies'     => array(
-    'myDepModule‘ => array(
-        'minVersion'        => '1.0.0‘,
-        'maxVersion'        => '1.*.*‘,
+    'myDepModule' => array(
+        'minVersion'        => '1.0.0',
+        'maxVersion'        => '1.*.*',
     ),
 ),
 ```

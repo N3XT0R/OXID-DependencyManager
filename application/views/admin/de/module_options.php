@@ -22,4 +22,7 @@ $aLang = array(
     'ib_DependencyManager_MODULE_STATUS_NOT_ACTIVE'             => 'Deaktiviert',
     'ib_DependencyManager_MODULE_STATUS_ACTIVE'                 => 'Aktiv',
     'ib_DependencyManager_MODULE_STATUS_NOT_COMPATIBLE'         => 'Nicht kompatibel',
+    'ib_DependencyManager_MODULE_DEACTIVATE_ALL_CHILDS'         => 'Alle Kind-Module deaktivieren',
+    'ib_DependencyManager_MODULE_ACTIVATE_ALL_CHILDS'           => 'Alle Kind-Module aktivieren',
+    'ib_DependencyManager_MODULE_SHOW_ALL_CHILDS_GRAPH'         => 'Abhängigkeitsbaum anzeigen',
 );

@@ -11,6 +11,18 @@ class ib_dependencyManager_dependencies extends oxAdminDetails{
 
     protected $_sThisTemplate = "admin/tpl/ib_dependencyManager_deps.tpl";
 
+    public function render() {
+        $oConfig        = $this->getConfig();
+        $sThisTemplate  = parent::render();
+
+        if($oConfig->getRequestParameter("aoc")){
+            $this->_aViewData['sAjax']  =  $this->getDependencyGraph();
+            $sThisTemplate              = "admin/tpl/popups/ib_dependencyManager_deps_ajax.tpl";
+        }
+
+        return $sThisTemplate;
+    }
+
     /**
      * Returns array with required dependencies
      * @return array
@@ -68,6 +80,41 @@ class ib_dependencyManager_dependencies extends oxAdminDetails{
         $oModule->load($sModuleId);
 
         return $oModule->isActive();
+    }
+
+    public function deactivateAll(){
+        $sModule                = $this->getEditObjectId();
+
+        $oDependencyManager     = oxNew('ib_dependencyManager');
+        $aDeps                  = $oDependencyManager->getChildDependencies($sModule);
+        print_r($aDeps);
+    }
+
+    public function getDependencyGraph(){
+        $oyMLGenerator          = oxNew("ib_DependencyManager_yMLWriter");
+        $sModule                = $this->getEditObjectId();
+
+        $oDependencyManager     = oxNew('ib_dependencyManager');
+        $aDeps                  = $oDependencyManager->getChildDependencies($sModule);
+        $oyMLGenerator->setModuleName($sModule);
+        $oyMLGenerator->setModuleList($aDeps);
+        $oyMLGenerator->generate();
+        $sLines                 = $oyMLGenerator->__toString();
+
+        $oCurl                  = oxNew("oxCurl");
+
+        $oCurl->setUrl("https://yuml.me/diagram/scruffy/class/");
+
+        $oCurl->setMethod("POST");
+        $oCurl->setOption("CURLOPT_FOLLOWLOCATION", true);
+        $oCurl->setOption("CURLOPT_REFERER", "https://yuml.me/diagram/scruffy/class/draw");
+
+        $oCurl->setParameters([
+            "dsl_text"          => $sLines,
+        ]);
+
+        $sReturn                = $oCurl->execute();
+        return $sReturn;
     }
 
 

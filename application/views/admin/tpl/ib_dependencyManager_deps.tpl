@@ -2,9 +2,9 @@
 
 <form name="transfer" id="transfer" action="[{ $oViewConf->getSelfLink() }]" method="post">
     [{ $oViewConf->getHiddenSid() }]
-    <input type="hidden" name="oxid" value="[{ $oxid }]">
+    <input type="hidden" name="oxid" value="[{$oxid}]">
     <input type="hidden" name="cl" value="ib_dependencyManager_dependencies">
-    <input type="hidden" name="editlanguage" value="[{ $editlanguage }]">
+    <input type="hidden" name="editlanguage" value="[{$editlanguage}]">
 </form>
 
 [{assign var="aDependencies" value=$oView->getDependencies()}]
@@ -44,6 +44,22 @@
     [{/foreach}]
     </tbody>
 </table>
+<hr>
+<!--
+<form name="myedit" id="myedit" action="[{$oViewConf->getSelfLink()}]" method="post">
+    <div>
+        [{ $oViewConf->getHiddenSid() }]
+        <input type="hidden" name="cl" value="ib_dependencyManager_dependencies">
+        <input type="hidden" name="fnc" value="deactivateAll">
+        <input type="hidden" name="oxid" value="[{$oxid}]">
+        <input type="hidden" name="editlanguage" value="[{$editlanguage}]">
+        <input type="hidden" name="updatelist" value="1">
+        <input type="submit" id="modules_deactivate" class="saveButton" value="[{oxmultilang ident="ib_DependencyManager_MODULE_DEACTIVATE_ALL_CHILDS"}]">
+    </div>
+</form>
+-->
+
+<input type="button" name="modules_graph" value="[{oxmultilang ident="ib_DependencyManager_MODULE_SHOW_ALL_CHILDS_GRAPH"}]" class="saveButton"  onclick="JavaScript:showDialog('&cl=ib_dependencyManager_dependencies&aoc=1&oxid=[{$oxid}]');">
 
 [{include file="bottomnaviitem.tpl"}]
 [{include file="bottomitem.tpl"}]

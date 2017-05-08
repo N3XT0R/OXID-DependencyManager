@@ -1,7 +1,7 @@
 # OXID-DependencyManager
 
 Dieses Modul dient der Behandlung von Abhängigkeiten zwischen einzelnen OXID-Modulen.
-Einzelne Modulklassen können in OXID überladen werden, doch immer mal wieder in der Routine kann es auftreten, dass Module in der falschen Reihenfolge aktiviert werden. Dieses Modul handled Abhängigkeiten von Modulen unabhängig vom Deploymentstatus und abhängig von der Aktivität der notwendigen Module und Versionen.
+Einzelne Modulklassen können in OXID überladen werden, doch immer mal wieder in der Routine kann es auftreten, dass Module in der falschen Reihenfolge aktiviert werden. Dieses Modul behandelt Abhängigkeiten von Modulen unabhängig vom Deploymentstatus und abhängig von der Aktivität der notwendigen Module und Versionen.
 
 ## Anforderungen
 
@@ -14,33 +14,31 @@ Die Metadata.php muss bei Modulabhängigkeiten um ein weiteres Feld erweitert we
 
 ### Modulabhängigkeiten definieren
 
-```
+```php
 'dependencies'     => array(
     'myDepModule' => array(),
 ),
 ```
 
-
 ### Versionsabhängigkeiten & Modulabhängigkeiten
 
-```
+```php
 'dependencies'     => array(
-    ‚myDepModule‘ => array(
-        'minVersion'        => ‚1.0.0‘,
-        'maxVersion'        => ‚1.2.0‘,
+    'myDepModule' => array(
+        'minVersion'        => '1.0.0',
+        'maxVersion'        => '1.2.0',
     ),
 ),
 ```
-
-### 
-
 
 ### Wildcard-MaxVersions definieren
 
-```
+```php
 'dependencies'     => array(
-    ‚myDepModule‘ => array(
-        'minVersion'        => ‚1.0.0‘,
-        'maxVersion'        => ‚1.*.*‘,
+    'myDepModule' => array(
+        'minVersion'        => '1.0.0',
+        'maxVersion'        => '1.*.*',
     ),
 ),
+```
+

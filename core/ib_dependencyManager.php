@@ -70,4 +70,42 @@ class ib_dependencyManager extends oxSuperCfg{
 
         return $blVersion;
     }
+
+    public function getChildDependencies($sModuleName){
+        $oConfig        = $this->getConfig();
+        $sModDir        = $oConfig->getModulesDir();
+        $aDeps          = array();
+
+        $oModuleList    = oxNew("oxModuleList");
+        $aModuleArrList = $oModuleList->getModulesFromDir($sModDir);
+        $aModuleList    = array();
+
+        /**
+         * @var oxModule|ib_DependencyManager_oxModule $oModule
+         */
+        foreach($aModuleArrList as $oModule){
+            $aDependencies  = $oModule->getDependencies();
+            if(count($aDependencies) > 0){
+                $sName                  = $oModule->getId();
+                $aModuleList[$sName]    = $aDependencies;
+            }
+        }
+
+        /**
+         * get child-modules from all paths of full dependency-tree
+         */
+        foreach($aModuleList as $sModule => $aDepenceOn){
+            if(array_key_exists($sModuleName, $aDepenceOn)){
+                if(!array_key_exists($sModule, $aDeps)){
+                    $aDeps[$sModule]    = [];
+                    $aChildChilds       = $this->getChildDependencies($sModule);
+                    if(count($aChildChilds) > 0){
+                        $aDeps[$sModule]          = $aChildChilds;
+                    }
+                }
+            }
+        }
+
+        return $aDeps;
+    }
 }

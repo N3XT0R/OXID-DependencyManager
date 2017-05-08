@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="PHP" type="php">
+        <CLASSES>
+          <root url="file://H:/Users/N3X/Documents/OXID_ESHOP_EE_5.2.9_for_PHP_5.6_SOURCE" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://H:/Users/N3X/Documents/OXID_ESHOP_EE_5.2.9_for_PHP_5.6_SOURCE" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+  <component name="sonarModuleSettings">
+    <option name="localAnalysisScripName" value="&lt;PROJECT&gt;" />
+    <option name="serverName" value="&lt;PROJECT&gt;" />
+  </component>
+</module>

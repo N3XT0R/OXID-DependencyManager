@@ -92,6 +92,13 @@ class ib_dependencyManager_dependencies extends oxAdminDetails{
 
     public function activateAll(){
         $sModule                = $this->getEditObjectId();
+
+        $oDependencyManager     = oxNew('ib_dependencyManager');
+        $aDeps                  = $oDependencyManager->getChildDependencies($sModule);
+        print_r($aDeps);
+
+        /**
+         *
         $oModuleList            = oxNew("oxModuleList");
         $aActiveModules         = $oModuleList->getDisabledModules();
         $oModuleInstaller       = oxNew("oxModuleInstaller");
@@ -107,6 +114,7 @@ class ib_dependencyManager_dependencies extends oxAdminDetails{
         }
 
         $this->_aViewData["updatenav"] = "1";
+         * */
     }
 
 }

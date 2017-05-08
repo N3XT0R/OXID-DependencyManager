@@ -91,6 +91,7 @@ class ib_dependencyManager_dependencies extends oxAdminDetails{
     }
 
     public function getDependencyGraph(){
+        $sReturn                = null;
         $oyMLGenerator          = oxNew("ib_DependencyManager_yMLWriter");
         $sModule                = $this->getEditObjectId();
 
@@ -101,19 +102,22 @@ class ib_dependencyManager_dependencies extends oxAdminDetails{
         $oyMLGenerator->generate();
         $sLines                 = $oyMLGenerator->__toString();
 
-        $oCurl                  = oxNew("oxCurl");
+        if(!empty($sLines)){
+            $oCurl                  = oxNew("oxCurl");
+            $oCurl->setUrl("https://yuml.me/diagram/scruffy/class/");
 
-        $oCurl->setUrl("https://yuml.me/diagram/scruffy/class/");
+            $oCurl->setMethod("POST");
+            $oCurl->setOption("CURLOPT_FOLLOWLOCATION", true);
+            $oCurl->setOption("CURLOPT_REFERER", "https://yuml.me/diagram/scruffy/class/draw");
 
-        $oCurl->setMethod("POST");
-        $oCurl->setOption("CURLOPT_FOLLOWLOCATION", true);
-        $oCurl->setOption("CURLOPT_REFERER", "https://yuml.me/diagram/scruffy/class/draw");
+            $oCurl->setParameters([
+                "dsl_text"          => $sLines,
+            ]);
 
-        $oCurl->setParameters([
-            "dsl_text"          => $sLines,
-        ]);
+            $sReturn                = $oCurl->execute();
+        }
 
-        $sReturn                = $oCurl->execute();
+
         return $sReturn;
     }
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="4ff74707-b103-4982-893a-d24cac5826b7" name="tcs" url="http://192.168.57.21">
+        <fileTransfer host="192.168.57.21" port="22" rootFolder="/home/www/tcs/modules/ib_DependencyManager" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -53,9 +53,12 @@
         <input type="hidden" name="oxid" value="[{$oxid}]">
         <input type="hidden" name="editlanguage" value="[{$editlanguage}]">
         <input type="hidden" name="updatelist" value="1">
-        <input type="submit" id="modules_deactivate" class="saveButton" value="[{oxmultilang ident="ib_DependencyManager_MODULE_DEACTIVATE_ALL_CHILDS"}]" [{if count($aDependencies) eq 0}]disabled[{/if}]>
+        <input type="submit" id="modules_deactivate" class="saveButton" value="[{oxmultilang ident="ib_DependencyManager_MODULE_DEACTIVATE_ALL_CHILDS"}]">
     </div>
 </form>
+
+
+<input type="button" name="modules_graph" value="[{oxmultilang ident="ib_DependencyManager_MODULE_SHOW_ALL_CHILDS_GRAPH"}]" class="saveButton"  onclick="JavaScript:showDialog('&cl=ib_dependencyManager_dependencies&aoc=1&oxid=[{$oxid}]');">
 
 [{include file="bottomnaviitem.tpl"}]
 [{include file="bottomitem.tpl"}]

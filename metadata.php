@@ -27,7 +27,8 @@ $aModule = array(
     ),
     "templates"   => array(
         //admin
-        'admin/tpl/ib_dependencyManager_deps.tpl'     => 'ib_DependencyManager/application/views/admin/tpl/ib_dependencyManager_deps.tpl',
+        'admin/tpl/ib_dependencyManager_deps.tpl'               => 'ib_DependencyManager/application/views/admin/tpl/ib_dependencyManager_deps.tpl',
+        'admin/tpl/popups/ib_dependencyManager_deps_ajax.tpl'   => 'ib_DependencyManager/application/views/admin/tpl/popups/ib_dependencyManager_deps_ajax.tpl',
     ),
     "blocks"      => array(),
     "events"      => array(),

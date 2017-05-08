@@ -72,49 +72,11 @@ class ib_dependencyManager_dependencies extends oxAdminDetails{
 
     public function deactivateAll(){
         $sModule                = $this->getEditObjectId();
-        $oModuleList            = oxNew("oxModuleList");
-        $aActiveModules         = array_keys($oModuleList->getActiveModuleInfo());
-        $oModuleInstaller       = oxNew("oxModuleInstaller");
-
-        foreach($aActiveModules as $sSubModule){
-            $oModule    = oxNew("oxModule");
-            $oModule->load($sSubModule);
-            $aDeps      = array_keys($oModule->getDependencies());
-
-
-            if(in_array($sModule, $aDeps) == true){
-                $oModuleInstaller->deactivate($oModule);
-            }
-        }
-
-        $this->_aViewData["updatenav"] = "1";
-    }
-
-    public function activateAll(){
-        $sModule                = $this->getEditObjectId();
 
         $oDependencyManager     = oxNew('ib_dependencyManager');
         $aDeps                  = $oDependencyManager->getChildDependencies($sModule);
         print_r($aDeps);
-
-        /**
-         *
-        $oModuleList            = oxNew("oxModuleList");
-        $aActiveModules         = $oModuleList->getDisabledModules();
-        $oModuleInstaller       = oxNew("oxModuleInstaller");
-
-        foreach($aActiveModules as $sSubModule){
-            $oModule    = oxNew("oxModule");
-            $oModule->load($sSubModule);
-            $aDeps      = array_keys($oModule->getDependencies());
-            
-            if(in_array($sModule, $aDeps) == true){
-                $oModuleInstaller->activate($oModule);
-            }
-        }
-
-        $this->_aViewData["updatenav"] = "1";
-         * */
     }
+
 
 }

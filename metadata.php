@@ -17,6 +17,7 @@ $aModule = array(
     "files"       => array(
         //core-files
         'ib_dependencyManager'              => 'ib_DependencyManager/core/ib_dependencyManager.php',
+        'ib_DependencyManager_yMLWriter'    => 'ib_DependencyManager/core/ib_DependencyManager_yMLWriter.php',
 
         //admin-controllers
         'ib_dependencyManager_dependencies' => 'ib_DependencyManager/application/controllers/admin/ib_dependencyManager_dependencies.php',

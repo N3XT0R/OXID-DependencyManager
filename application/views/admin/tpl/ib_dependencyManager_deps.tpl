@@ -44,7 +44,7 @@
     [{/foreach}]
     </tbody>
 </table>
-
+<hr>
 <form name="myedit" id="myedit" action="[{$oViewConf->getSelfLink()}]" method="post">
     <div>
         [{ $oViewConf->getHiddenSid() }]
@@ -53,19 +53,7 @@
         <input type="hidden" name="oxid" value="[{$oxid}]">
         <input type="hidden" name="editlanguage" value="[{$editlanguage}]">
         <input type="hidden" name="updatelist" value="1">
-        <input type="submit" id="modules_deactivate" class="saveButton" value="[{oxmultilang ident="ib_DependencyManager_MODULE_DEACTIVATE_ALL_CHILDS"}]">
-    </div>
-</form>
-
-<form name="myedit" id="myedit" action="[{$oViewConf->getSelfLink()}]" method="post">
-    <div>
-        [{ $oViewConf->getHiddenSid() }]
-        <input type="hidden" name="cl" value="ib_dependencyManager_dependencies">
-        <input type="hidden" name="fnc" value="activateAll">
-        <input type="hidden" name="oxid" value="[{$oxid}]">
-        <input type="hidden" name="editlanguage" value="[{$editlanguage}]">
-        <input type="hidden" name="updatelist" value="1">
-        <input type="submit" id="modules_activate" class="saveButton" value="[{oxmultilang ident="ib_DependencyManager_MODULE_ACTIVATE_ALL_CHILDS"}]">
+        <input type="submit" id="modules_deactivate" class="saveButton" value="[{oxmultilang ident="ib_DependencyManager_MODULE_DEACTIVATE_ALL_CHILDS"}]" [{if count($aDependencies) eq 0}]disabled[{/if}]>
     </div>
 </form>
 

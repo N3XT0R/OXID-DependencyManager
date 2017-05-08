@@ -101,7 +101,6 @@ class ib_dependencyManager extends oxSuperCfg{
                     $aChildChilds       = $this->getChildDependencies($sModule);
                     if(count($aChildChilds) > 0){
                         $aDeps[$sModule]          = $aChildChilds;
-
                     }
                 }
             }

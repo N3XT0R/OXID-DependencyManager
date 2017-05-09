@@ -18,7 +18,8 @@
     "tools",
     "dependency",
     "modules",
-    "oxid 5.x"
+    "oxid 5.x",
+    "oxid"
   ],
   "repositories": [
     {

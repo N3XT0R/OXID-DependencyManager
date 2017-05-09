@@ -119,15 +119,23 @@ class ib_dependencyManager extends oxSuperCfg{
         return $aDeps;
     }
 
-    public function getConvertDependenciesToHierarchyStructure(array $aDeps, array $aSubDeps = array()){
+    public function getConvertDependenciesToHierarchyStructure(array $aDeps){
         $aResult    = array();
+        $iCount     = 0;
 
         foreach($aDeps as $sModuleName => $aVals){
-            $iAmountDimensions  = $this->getCountDimensions($aVals);
+            if(is_array($aVals)){
+                $aSubDeps               = $this->getConvertDependenciesToHierarchyStructure($aVals);
+                if(count($aSubDeps) > 0){
+                    $aResult[$iCount]   = $aSubDeps;
+                }
+            }
 
+            $aResult[$iCount]["name"]   = $sModuleName;
+            $iCount++;
         }
 
-        return $aDeps;
+        return $aResult;
     }
 
 

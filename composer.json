@@ -3,7 +3,7 @@
   "description": "Abhängigkeitsverwaltung für OXID CE/PE/EE",
   "require": {
     "php": ">=5.4.0",
-    "ext-curl": "*",
+    "ext-curl": "*"
   },
   "authors": [
     {

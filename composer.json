@@ -2,16 +2,17 @@
   "name": "n3xt0r/oxid-dependency-manager",
   "description": "Abhängigkeitsverwaltung für OXID CE/PE/EE",
   "require": {
-    "php": ">=5.4.0"
+    "php": ">=5.4.0",
+    "ext-curl": "*",
   },
   "authors": [
     {
       "name": "Ilya Beliaev",
       "email": "info@php-dev.info",
-      "homepage": "http://php-dev.info"
+      "homepage": "http://php-dev.info",
     }
   ],
-  "type": "OXID",
+  "type": "oxideshop-module",
   "license": "GPL-3.0",
   "keywords": [
     "backend",
@@ -28,8 +29,8 @@
     }
   ],
   "extra": {
-    "installer-paths": {
-      "modules/ib_DependencyManager": ["vendor/package"]
+    "oxideshop": {
+      "target-directory": "ib_DependencyManager"
     }
   }
 }

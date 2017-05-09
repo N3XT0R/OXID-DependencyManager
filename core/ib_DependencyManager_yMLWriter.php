@@ -53,12 +53,12 @@ class ib_DependencyManager_yMLWriter extends oxSuperCfg{
         }
 
         foreach ($aList as $sModule => $aChildModuleList) {
-            $aLineList[] = "[$sModuleName]->[$sModule]";
+            $aLineList[] = "[$sModuleName]^-[$sModule]";
             $iChilds     = count($aChildModuleList);
 
             if ($iChilds == 1) {
                 $sKey           = key($aChildModuleList);
-                $aLineList[]    = "[$sModule]->[" . $sKey . "]";
+                $aLineList[]    = "[$sModule]^-[" . $sKey . "]";
             } elseif ($iChilds > 1) {
                 $aLines         = $this->_recursiveyMLGeneration($aChildModuleList, $aLineList, $sModule);
                 $aLineList      = array_merge($aLineList, $aLines);

@@ -108,4 +108,42 @@ class ib_dependencyManager extends oxSuperCfg{
 
         return $aDeps;
     }
+
+    /**
+     * Sort Dependencies by amount of dimensions
+     * @param array $aDeps
+     * @return array
+     */
+    public function getSortChildDependencies(array $aDeps){
+        uasort($aDeps, array($this, 'getCountDimensions'));
+        return $aDeps;
+    }
+
+    public function getConvertDependenciesToHierarchyStructure(array $aDeps, array $aSubDeps = array()){
+        $aResult    = array();
+
+        foreach($aDeps as $sModuleName => $aVals){
+            $iAmountDimensions  = $this->getCountDimensions($aVals);
+
+        }
+
+        return $aDeps;
+    }
+
+
+    /**
+     * Get Count of Array-Dimensions
+     * @param $aArray
+     * @param int $iCount optional
+     * @return int
+     */
+    public function getCountDimensions($aArray, $iCount = 0) {
+        $iResult = $iCount;
+
+        if(is_array($aArray)) {
+            $iResult = $this->getCountDimensions(current($aArray), ++$iCount);
+        }
+
+        return $iResult;
+    }
 }

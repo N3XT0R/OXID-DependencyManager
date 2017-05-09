@@ -84,10 +84,18 @@ class ib_dependencyManager_dependencies extends oxAdminDetails{
 
     public function deactivateAll(){
         $sModule                = $this->getEditObjectId();
+        $aDependencyHierarchy   = array();
 
         $oDependencyManager     = oxNew('ib_dependencyManager');
         $aDeps                  = $oDependencyManager->getChildDependencies($sModule);
-        print_r($aDeps);
+        $aSortedDeps            = $oDependencyManager->getSortChildDependencies($aDeps);
+
+        if(count($aSortedDeps) > 0){
+            $aDependencyHierarchy   = $oDependencyManager->getConvertDependenciesToHierarchyStructure($aSortedDeps);
+        }
+
+
+        print_r($aDependencyHierarchy);
     }
 
     public function getDependencyGraph(){
@@ -120,6 +128,8 @@ class ib_dependencyManager_dependencies extends oxAdminDetails{
 
         return $sReturn;
     }
+
+
 
 
 }

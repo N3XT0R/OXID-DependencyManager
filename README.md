@@ -6,7 +6,7 @@ Einzelne Modulklassen können in OXID überladen werden, doch immer mal wieder i
 ## Anforderungen
 
 - PHP 5.4 oder höher
-- OXID CE/PE/EE in der Version 4.9.x / 5.2.x
+- OXID CE/PE/EE in der Version 4.9.x / 5.3.x
 
 ## metadata.php
 

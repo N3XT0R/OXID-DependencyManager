@@ -42,3 +42,5 @@ Die Metadata.php muss bei Modulabhängigkeiten um ein weiteres Feld erweitert we
 ),
 ```
 
+Diese Software ist nur kostenfrei für freie Software, komerzielle Projekte benötigen ein Einverständnis des Rechteinhabers. 
+
